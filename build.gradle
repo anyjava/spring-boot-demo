@@ -1,5 +1,4 @@
-buildscript {
-	ext {
+buildscript { ext {
 		springBootVersion = '1.3.1.RELEASE'
 	}
 	repositories {
@@ -14,6 +13,9 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'spring-boot' 
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'findbugs'
 
 jar {
 	baseName = 'demo'
@@ -45,6 +47,32 @@ eclipse {
 	}
 }
 
+checkstyle {
+    toolVersion = '6.12'
+    configFile = file("${project.rootDir}/config/checkstyle/woowa_checks.xml")
+    sourceSets = [sourceSets.main, sourceSets.test]
+}
+
+checkstyleMain {
+    outputs.upToDateWhen { false }
+}
+
+checkstyleTest {
+    outputs.upToDateWhen { false }
+}
+
+pmd {
+    ruleSets = [
+        "java-basic",
+        "java-braces"
+    ]
+
+    sourceSets = [sourceSets.main, sourceSets.test]
+}
+
+findbugs {
+    sourceSets = [sourceSets.main, sourceSets.test]
+}
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.10'
 }
