@@ -75,6 +75,14 @@ pmd {
 findbugs {
     sourceSets = [sourceSets.main, sourceSets.test]
 }
+
+tasks.withType(FindBugs) {
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.10'
 }
