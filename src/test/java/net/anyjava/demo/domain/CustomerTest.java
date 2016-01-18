@@ -1,8 +1,8 @@
 package net.anyjava.demo.domain;
 
-import org.junit.Test;
-
 import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
 
 /**
  * 고객 정보 엔티티
@@ -14,7 +14,7 @@ public class CustomerTest {
         Customer customer = new Customer();
 
         customer.setId(1);
-        assertEquals(new Integer(1), customer.getId());
+        assertEquals(Integer.valueOf(1), customer.getId());
 
         customer.setFirstName("아이유");
         assertEquals("아이유", customer.getFirstName());
