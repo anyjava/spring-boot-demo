@@ -31,6 +31,7 @@ repositories {
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-aop')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-freemarker')
 	compile('org.projectlombok:lombok:1.16.6')
 	compile('org.springframework.boot:spring-boot-starter-security')
@@ -74,6 +75,14 @@ pmd {
 findbugs {
     sourceSets = [sourceSets.main, sourceSets.test]
 }
+
+tasks.withType(FindBugs) {
+	reports {
+		xml.enabled = false
+		html.enabled = true
+	}
+}
+
 task wrapper(type: Wrapper) {
 	gradleVersion = '2.10'
 }
