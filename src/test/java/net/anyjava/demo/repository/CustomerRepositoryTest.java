@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import net.anyjava.SpringDemoApplication;
 import net.anyjava.demo.domain.Customer;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +24,30 @@ public class CustomerRepositoryTest {
     @Autowired
     CustomerRepository customerRepository;
 
-    @Test
-    public void testSave() {
-        Customer customer1 = new Customer(null, "아이유", "쯔이");
-        Customer customer = customerRepository.save(customer1);
+    private Integer id;
 
-        assertEquals(new Customer(1, "아이유", "쯔이"), customer);
+    /**
+     * jajajajajajvavaa
+     */
+    @Before
+    public void setUp() {
+        Customer objCustomer = new Customer(null, "아이유", "쯔이");
+        Customer customer = customerRepository.save(objCustomer);
+        this.id = customer.getId();
     }
 
+    @Test
+    public void testSave() {
+        Customer girlGroup = new Customer(3, "러블리즈", "여자친구");
+        Customer saveCustomer = customerRepository.save(new Customer(null,
+                "러블리즈",
+                "여자친구"));
+        assertEquals(girlGroup, saveCustomer);
+    }
+
+    @Test
+    public void testFindOne() {
+        assertEquals(new Customer(1, "아이유", "쯔이"),
+                customerRepository.findOne(this.id));
+    }
 }
