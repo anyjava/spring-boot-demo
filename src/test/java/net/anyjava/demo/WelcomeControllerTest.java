@@ -1,7 +1,6 @@
 package net.anyjava.demo;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,7 +35,7 @@ public class WelcomeControllerTest {
     public void setup() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
-                .apply(springSecurity())
+//                .apply(springSecurity())
                 .build();
     }
 

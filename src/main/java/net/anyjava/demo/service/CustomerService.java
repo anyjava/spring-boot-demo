@@ -25,7 +25,21 @@ public class CustomerService {
         return customerRepository.save(customer);
     }
 
-    public Customer find(Integer id) {
+
+    public Customer select(Long id) {
         return customerRepository.findOne(id);
+    }
+
+    public boolean delete(Long id) {
+        Customer customer = customerRepository.findOne(id);
+        boolean returnV = false;
+
+        if (customer == null) {
+            returnV = false;
+        } else {
+            customerRepository.delete(id);
+            returnV = true;
+        }
+        return returnV;
     }
 }

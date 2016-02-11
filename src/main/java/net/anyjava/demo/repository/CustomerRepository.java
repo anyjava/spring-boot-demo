@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by anyjava on 2016. 1. 18..
  */
-public interface CustomerRepository extends JpaRepository<Customer, Integer> {
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
 //    @Query("SELECT X FROM Customer X ORDER BY x.firstName, x.lastName")
 //    List<Customer> findAllOrderByName();
