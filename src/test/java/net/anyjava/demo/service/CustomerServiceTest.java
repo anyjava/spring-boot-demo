@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by sykim on 2016. 1. 22..
@@ -22,11 +23,23 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class CustomerServiceTest {
 
     @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
     private CustomerService customerService;
 
-    @Before
-    public void setUp() throws Exception {
+    private Customer resultCustomer;
+    private Integer resultCustomerId;
 
+    /**
+     * 테스트 전 기본 객체 생성
+     */
+    @Before
+    @Transactional
+    public void setUp() throws Exception {
+        Customer defaultCustomer = this.customerFactory(null);
+        this.resultCustomer = customerRepository.save(defaultCustomer);
+        this.resultCustomerId = this.resultCustomer.getId();
     }
 
     @After
@@ -34,15 +47,26 @@ public class CustomerServiceTest {
 
     }
 
+    /**
+     * JPA의 객체는 같은 아이디일 경우 공유된다.
+     * 싱글톤 느낌
+     */
     @Test
     public void testCreate() {
 
-        Customer customer = new Customer(null, "강", "현구");
-
+        Customer customer = this.customerFactory(null);
         Customer created = customerService.create(customer);
 
-        customer.setId(1);
+        assertEquals(this.customerFactory(this.resultCustomerId + 1), created);
+    }
 
-        assertEquals(customer, created);
+    @Test
+    public void testRead() {
+        Customer readCustomer = customerService.find(this.resultCustomerId);
+        assertEquals(this.resultCustomer, readCustomer);
+    }
+
+    private Customer customerFactory(Integer id) {
+        return new Customer(id, "강", "현구");
     }
 }
