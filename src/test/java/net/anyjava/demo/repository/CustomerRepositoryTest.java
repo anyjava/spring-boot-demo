@@ -22,9 +22,9 @@ import org.springframework.transaction.annotation.Transactional;
 public class CustomerRepositoryTest {
 
     @Autowired
-    CustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
 
-    private Integer id;
+    private Long id;
 
     /**
      * jajajajajajvavaa
@@ -38,16 +38,15 @@ public class CustomerRepositoryTest {
 
     @Test
     public void testSave() {
-        Customer girlGroup = new Customer(3, "러블리즈", "여자친구");
-        Customer saveCustomer = customerRepository.save(new Customer(null,
-                "러블리즈",
-                "여자친구"));
+        Customer girlGroup = new Customer(3L, "러블리즈", "여자친구");
+        Customer saveCustomer = customerRepository.save(
+                new Customer(null, "러블리즈", "여자친구"));
         assertEquals(girlGroup, saveCustomer);
     }
 
     @Test
     public void testFindOne() {
-        assertEquals(new Customer(1, "아이유", "쯔이"),
+        assertEquals(new Customer(1L, "아이유", "쯔이"),
                 customerRepository.findOne(this.id));
     }
 }

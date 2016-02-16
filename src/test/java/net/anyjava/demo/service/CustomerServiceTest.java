@@ -1,6 +1,8 @@
 package net.anyjava.demo.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import net.anyjava.SpringDemoApplication;
 import net.anyjava.demo.domain.Customer;
@@ -28,18 +30,15 @@ public class CustomerServiceTest {
     @Autowired
     private CustomerService customerService;
 
-    private Customer resultCustomer;
-    private Integer resultCustomerId;
+    private Customer createdCustomer;
+    private Long maxId;
 
-    /**
-     * 테스트 전 기본 객체 생성
-     */
+
     @Before
     @Transactional
     public void setUp() throws Exception {
-        Customer defaultCustomer = this.customerFactory(null);
-        this.resultCustomer = customerRepository.save(defaultCustomer);
-        this.resultCustomerId = this.resultCustomer.getId();
+        createdCustomer = customerService.create(getCustomer());
+        this.maxId = createdCustomer.getId();
     }
 
     @After
@@ -53,20 +52,39 @@ public class CustomerServiceTest {
      */
     @Test
     public void testCreate() {
+        Customer customer = getCustomer();
+        Customer target = getCustomer();
+        target.setId(this.maxId+1L);
 
-        Customer customer = this.customerFactory(null);
-        Customer created = customerService.create(customer);
-
-        assertEquals(this.customerFactory(this.resultCustomerId + 1), created);
+        assertEquals(target, customerService.create(customer));
     }
 
     @Test
-    public void testRead() {
-        Customer readCustomer = customerService.find(this.resultCustomerId);
-        assertEquals(this.resultCustomer, readCustomer);
+    public void testSelectOne() {
+        Customer target = getCustomer();
+        target.setId(this.maxId);
+        assertEquals(target, customerService.select(this.maxId));
     }
 
-    private Customer customerFactory(Integer id) {
-        return new Customer(id, "강", "현구");
+    @Test
+    public void testUpdate() {
+        Customer customer = customerService.select(this.maxId);
+        customer.setFirstName("아");
+        customer.setLastName("이유");
+
+        assertEquals(new Customer(this.maxId, "아", "이유"), customer);
+//        assertEquals(new Customer(this.maxId, "아", "이유"), customerService.update(customer));
+    }
+
+    @Test
+    public void testDelete() {
+        assertTrue(customerService.delete(this.maxId));
+        assertFalse(customerService.delete(this.maxId));
+    }
+
+
+
+    private Customer getCustomer() {
+        return new Customer(null, "강", "현구");
     }
 }

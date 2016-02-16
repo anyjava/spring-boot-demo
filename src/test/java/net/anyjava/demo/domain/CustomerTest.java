@@ -13,8 +13,8 @@ public class CustomerTest {
     public void testCustomerTest() {
         Customer customer = new Customer();
 
-        customer.setId(1);
-        assertEquals(Integer.valueOf(1), customer.getId());
+        customer.setId(1L);
+        assertEquals(Long.valueOf(1L), customer.getId());
 
         customer.setFirstName("아이유");
         assertEquals("아이유", customer.getFirstName());
