@@ -1,10 +1,9 @@
 package net.anyjava.demo.controller;
 
 import net.anyjava.demo.domain.Customer;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import net.anyjava.demo.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by anyjava on 2016. 2. 11..
@@ -13,8 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/Customers")
 public class CustomerController {
 
+    @Autowired
+    private CustomerService customerService;
+
     @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    @ResponseBody
     public Customer getCustomer(@PathVariable Long id) {
-        return null;
+        return customerService.select(id);
     }
 }
