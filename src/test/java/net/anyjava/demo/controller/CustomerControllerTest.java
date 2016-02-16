@@ -60,6 +60,9 @@ public class CustomerControllerTest {
                         content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(content().string(json));
 
+        mockMvc.perform(
+                get("/api/Customers/0").accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
 
