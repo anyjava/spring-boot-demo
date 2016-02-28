@@ -16,9 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = SpringDemoApplication.class)
@@ -49,7 +50,8 @@ public class CustomerControllerTest {
     @Test
     public void testGetCustomer() throws Exception {
 
-        Customer customer = this.customerService.create(new Customer(null, "아", "이유"));
+        Customer customer
+                = this.customerService.create(new Customer(null, "아", "이유"));
         Gson gson   = new Gson();
         String json = gson.toJson(customer);
 
@@ -57,13 +59,21 @@ public class CustomerControllerTest {
                     get("/api/Customers/1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(
-                        content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andExpect(content().string(json));
+                        content().contentType(
+                                MediaType.APPLICATION_JSON_UTF8_VALUE))
+                .andExpect(content().string(json))
+                .andExpect(jsonPath("$.id", is(customer.getLastName())))
+                .andExpect(jsonPath("$.firstName", is(customer.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(customer.getLastName())));
 
         mockMvc.perform(
                 get("/api/Customers/0").accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void 한글테스트() {
+        assertTrue(true);
+    }
 
 }

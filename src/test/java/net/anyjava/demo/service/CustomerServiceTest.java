@@ -54,7 +54,7 @@ public class CustomerServiceTest {
     public void testCreate() {
         Customer customer = getCustomer();
         Customer target = getCustomer();
-        target.setId(this.maxId+1L);
+        target.setId(this.maxId + 1L);
 
         assertEquals(target, customerService.create(customer));
     }
@@ -73,7 +73,8 @@ public class CustomerServiceTest {
         customer.setLastName("이유");
 
         assertEquals(new Customer(this.maxId, "아", "이유"), customer);
-//        assertEquals(new Customer(this.maxId, "아", "이유"), customerService.update(customer));
+//        assertEquals(new Customer(this.maxId, "아", "이유")
+// , customerService.update(customer));
     }
 
     @Test

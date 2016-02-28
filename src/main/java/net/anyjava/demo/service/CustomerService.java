@@ -26,10 +26,17 @@ public class CustomerService {
     }
 
 
+    /**
+     * 조회
+     */
     public Customer select(Long id) {
         return customerRepository.findOne(id);
     }
 
+    /**
+     * 삭제
+     */
+    @Transactional
     public boolean delete(Long id) {
         Customer customer = customerRepository.findOne(id);
         boolean returnV = false;

@@ -35,7 +35,6 @@ public class WelcomeControllerTest {
     public void setup() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
-//                .apply(springSecurity())
                 .build();
     }
 

@@ -25,14 +25,21 @@ public class SpringDemoApplication {
     }
 
 
+    /**
+     * UTF-8 설정
+     */
     @Bean
     public HttpMessageConverter<String> responseBodyConverter() {
         return new StringHttpMessageConverter(Charset.forName("UTF-8"));
     }
 
+    /**
+     * UTF-8 설정
+     */
     @Bean
     public OrderedCharacterEncodingFilter characterEncodingFilter() {
-        OrderedCharacterEncodingFilter filter = new OrderedCharacterEncodingFilter();
+        OrderedCharacterEncodingFilter filter =
+                new OrderedCharacterEncodingFilter();
         filter.setEncoding(this.httpEncodingProperties.getCharset().name());
         filter.setForceEncoding(this.httpEncodingProperties.isForce());
         filter.setOrder(Ordered.HIGHEST_PRECEDENCE);
