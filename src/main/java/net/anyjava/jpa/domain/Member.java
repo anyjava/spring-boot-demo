@@ -18,7 +18,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class Member extends BaseEntity {
 
     @Id

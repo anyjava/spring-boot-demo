@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Entity
 @Data
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "ORDERS")
 public class Order extends BaseEntity {
 

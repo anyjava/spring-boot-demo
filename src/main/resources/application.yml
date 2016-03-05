@@ -6,3 +6,4 @@ spring:
     password:
   jpa:
     show-sql: true
+    format-sql: true
