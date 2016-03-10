@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 /**
  * 고객 정보 엔티티
  */
@@ -14,6 +16,7 @@ public class CustomerTest {
         Customer customer = new Customer();
 
         customer.setId(1L);
+
         assertEquals(Long.valueOf(1L), customer.getId());
 
         customer.setFirstName("아이유");
